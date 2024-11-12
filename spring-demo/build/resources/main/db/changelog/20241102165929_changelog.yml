@@ -1,0 +1,62 @@
+databaseChangeLog:
+- changeSet:
+    id: 1730555973245-1
+    author: alex (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: productPK
+            name: id
+            remarks: Идентификатор
+            type: BIGINT
+        - column:
+            name: name
+            remarks: Название продукта
+            type: VARCHAR(128)
+        - column:
+            constraints:
+              nullable: false
+            name: group_id
+            type: BIGINT
+        remarks: Продукт
+        tableName: product
+- changeSet:
+    id: 1730555973245-2
+    author: alex (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: product_groupPK
+            name: id
+            remarks: Идентификатор
+            type: BIGINT
+        - column:
+            name: name
+            remarks: Название продукта
+            type: VARCHAR(128)
+        remarks: Группа продуктов
+        tableName: product_group
+- changeSet:
+    id: 1730555973245-3
+    author: alex (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: group_id
+        baseTableName: product
+        constraintName: FKo5xr9dkohdmfkycjxrabl966k
+        deferrable: false
+        initiallyDeferred: false
+        referencedColumnNames: id
+        referencedTableName: product_group
+        validate: true
+

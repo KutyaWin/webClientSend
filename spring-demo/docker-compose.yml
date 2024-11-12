@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: docker
+      POSTGRES_DB: renlife_demo
+    ports:
+      - "5433:5432"

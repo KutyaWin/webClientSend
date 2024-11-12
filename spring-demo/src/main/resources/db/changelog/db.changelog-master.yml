@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: 20241102165929_changelog.yml
+      relativeToChangelogFile: true
+  - include:
+      file: fixtures.sql
+      relativeToChangelogFile: true

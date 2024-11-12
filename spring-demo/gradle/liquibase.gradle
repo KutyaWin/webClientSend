@@ -1,0 +1,52 @@
+/*
+ * Plugin for Liquibase Support from Gradle
+ */
+
+if (!project.hasProperty('runList')) {
+    project.ext.runList = 'base'
+}
+
+ext {
+    diffChangelogFile = 'src/main/resources/db/changelog/' + new Date().format('yyyyMMddHHmmss') + '_changelog.yml'
+    baseUrl = 'jdbc:postgresql://localhost:5433/renlife_demo'
+    baseUsername = 'docker'
+    basePassword = 'docker'
+    baseDriver = 'org.postgresql.Driver'
+    baseDialect = 'org.hibernate.dialect.PostgreSQLDialect'
+    baseClassPath = "$buildDir/classes/java/main"
+}
+
+liquibase {
+    activities {
+        base {
+            url baseUrl
+            username baseUsername
+            password basePassword
+            driver baseDriver
+            changelogFile 'src/main/resources/db/changelog/db.changelog-master.yml'
+            defaultSchemaName 'public'
+            logLevel 'info'
+        }
+
+        diff {
+            url baseUrl
+            username baseUsername
+            password basePassword
+            driver baseDriver
+            classpath baseClassPath
+            changelogFile 'src/main/resources/db/changelog/' + new Date().format('yyyyMMddHHmmss') + '_changelog.yml'
+            referenceUrl 'hibernate:spring:' + group + '.' + 'demo' +
+                    "?dialect=${baseDialect}" +
+                    '&hibernate.physical_naming_strategy=' +
+                    'org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy' +
+                    '&hibernate.implicit_naming_strategy=' +
+                    'org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy'
+            defaultSchemaName 'public'
+            logLevel 'info'
+        }
+        runList = project.ext.runList
+    }
+}
+
+diff.dependsOn compileJava
+diffChangelog.dependsOn compileJava
